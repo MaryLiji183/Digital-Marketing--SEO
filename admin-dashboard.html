@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalBoost | Executive Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #f43f5e;
+            --accent: #0ea5e9;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --border: rgba(99, 102, 241, 0.12);
+            --text-main: #0f172a;
+            --text-dim: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            /* Brighter Mesh Gradient */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.05) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+        }
+
+        /* --- Refined Top Nav Alignment --- */
+        .top-nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-items { display: flex; gap: 35px; list-style: none; }
+        .nav-items a { 
+            color: var(--text-dim); text-decoration: none; 
+            font-weight: 700; font-size: 14px; transition: 0.3s; 
+        }
+        .nav-items a:hover { color: var(--primary); }
+        .nav-items a.active { color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 5px; }
+
+        /* --- Layout Control --- */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 0 30px;
+        }
+
+        .dash-header {
+            margin-bottom: 40px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        .dash-header h1 { font-size: 32px; font-weight: 800; letter-spacing: -1.5px; }
+
+        /* --- Bento Grid Alignment --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 320px;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid white;
+            border-radius: 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.05);
+            transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1); }
+
+        h3 { font-size: 16px; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        /* --- Data Components --- */
+        .mini-metric {
+            background: white; border: 1px solid var(--border);
+            padding: 15px; border-radius: 20px; margin-bottom: 12px;
+        }
+        .mini-metric label { font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; }
+        .mini-metric .val { font-size: 20px; font-weight: 800; color: var(--primary); }
+
+        /* --- Live Pulse Chart --- */
+        .chart-container {
+            width: 100%; height: 260px;
+            background: white; border-radius: 20px;
+            border: 1px solid var(--border);
+            position: relative; overflow: hidden;
+            display: flex; align-items: flex-end; gap: 8px; padding: 20px;
+        }
+        .bar { 
+            flex: 1; background: var(--primary); border-radius: 4px 4px 0 0; 
+            animation: grow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes grow { from { height: 20%; } to { height: 80%; } }
+
+        /* --- Progress Bars --- */
+        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 8px 0 20px; }
+        .fill { height: 100%; background: var(--primary); border-radius: 10px; }
+
+        /* --- Activity Feed --- */
+        .feed-item {
+            display: flex; gap: 15px; padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .icon-circle {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(99, 102, 241, 0.1); color: var(--primary);
+            display: flex; align-items: center; justify-content: center; font-size: 14px;
+        }
+
+        @media (max-width: 1200px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            .dash-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav" data-aos="fade-down">
+        <div class="logo" style="font-weight: 800; font-size: 22px; color: var(--primary);">
+            <i class="fas fa-bolt"></i> Digital<span style="color: var(--text-main);">Boost</span>
+        </div>
+        <ul class="nav-items">
+            <li><a href="home.htl" class="active">HOME</a></li>
+            <li><a href="portfolio.html">photos</a></li>
+            <li><a href="about.html">System Nodes</a></li>
+            <li><a href="contact.html">Contact Support</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <i class="far fa-bell" style="color: var(--text-dim); cursor: pointer;"></i>
+            <div class="user-pill" style="background: white; border: 1px solid var(--border); padding: 6px 15px; border-radius: 100px; font-weight: 700; font-size: 13px;">
+                <span style="color: #10b981;">●</span> Admin_Root
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <header class="dash-header" data-aos="fade-up">
+            <div>
+                <h1>Command Center</h1>
+                <p style="color: var(--text-dim); font-weight: 600;">System synchronized // Total Nodes: 1,402</p>
+            </div>
+            <button style="background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);">
+                <i class="fas fa-plus"></i> New Protocol
+            </button>
+        </header>
+
+        <div class="grid-layout">
+            
+            <div class="column" data-aos="fade-right">
+                <div class="card">
+                    <h3><i class="fas fa-microchip" style="color: var(--primary);"></i> Performance</h3>
+                    
+                    <label style="font-size: 12px; font-weight: 700;">CPU Utilization</label>
+                    <div class="progress-bar"><div class="fill" style="width: 42%;"></div></div>
+                    
+                    <label style="font-size: 12px; font-weight: 700;">Cloud Memory</label>
+                    <div class="progress-bar"><div class="fill" style="width: 65%; background: var(--accent);"></div></div>
+                    
+                    <label style="font-size: 12px; font-weight: 700;">Node Connectivity</label>
+                    <div class="progress-bar"><div class="fill" style="width: 98%; background: #10b981;"></div></div>
+                </div>
+
+                <div class="card" style="margin-top: 24px;">
+                    <h3><i class="fas fa-satellite" style="color: var(--secondary);"></i> Network Pulse</h3>
+                    <div class="mini-metric">
+                        <label>Active Crawlers</label>
+                        <div class="val">842 <span style="font-size: 12px; color: #10b981;">+12%</span></div>
+                    </div>
+                    <div class="mini-metric">
+                        <label>Request Latency</label>
+                        <div class="val">14ms <span style="font-size: 12px; color: var(--secondary);">Optimal</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column" data-aos="fade-up" data-aos-delay="100">
+                <div class="card" style="height: 100%;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h3><i class="fas fa-chart-line" style="color: var(--primary);"></i> Growth Synthesis</h3>
+                        <select style="border: none; background: #f1f5f9; padding: 5px 10px; border-radius: 8px; font-weight: 700; font-size: 12px;">
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                        </select>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="bar" style="animation-delay: 0.1s; background: #6366f1;"></div>
+                        <div class="bar" style="animation-delay: 0.3s; background: #818cf8;"></div>
+                        <div class="bar" style="animation-delay: 0.2s; background: #a5b4fc;"></div>
+                        <div class="bar" style="animation-delay: 0.5s; background: #6366f1;"></div>
+                        <div class="bar" style="animation-delay: 0.4s; background: #0ea5e9;"></div>
+                        <div class="bar" style="animation-delay: 0.6s; background: #f43f5e;"></div>
+                        <div class="bar" style="animation-delay: 0.2s; background: #6366f1;"></div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px;">
+                        <div style="text-align: center; border-right: 1px solid var(--border);">
+                            <h2 style="font-size: 28px;">128k</h2>
+                            <p style="font-size: 12px; color: var(--text-dim); font-weight: 700;">Organic Inflow</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <h2 style="font-size: 28px; color: #10b981;">+22%</h2>
+                            <p style="font-size: 12px; color: var(--text-dim); font-weight: 700;">Conversion Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column" data-aos="fade-left" data-aos-delay="200">
+                <div class="card" style="height: 100%;">
+                    <h3><i class="fas fa-stream" style="color: var(--accent);"></i> Live Streams</h3>
+                    
+                    <div class="feed-item">
+                        <div class="icon-circle"><i class="fas fa-key"></i></div>
+                        <div>
+                            <p style="font-size: 13px; font-weight: 800;">Auth Node Verified</p>
+                            <p style="font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono';">usr_882 // 10.0.4</p>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="icon-circle" style="color: var(--secondary); background: rgba(244, 63, 94, 0.1);"><i class="fas fa-shield-virus"></i></div>
+                        <div>
+                            <p style="font-size: 13px; font-weight: 800;">Threat Intercepted</p>
+                            <p style="font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono';">IP_77.12.9 // BLOCKED</p>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="icon-circle" style="color: #10b981; background: rgba(16, 185, 129, 0.1);"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <div>
+                            <p style="font-size: 13px; font-weight: 800;">Backup Completed</p>
+                            <p style="font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono';">Archive_V9 // SQL_DB</p>
+                        </div>
+                    </div>
+
+                    <button style="width: 100%; margin-top: 30px; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: white; font-weight: 700; color: var(--text-dim); cursor: pointer; transition: 0.3s;">
+                        Export Session Logs
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalBoost | Next-Gen Launch</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --accent: #0ea5e9;
+            --bg: #ffffff;
+            --glass: rgba(255, 255, 255, 0.7);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
+        }
+
+        /* --- Animated Background Particles --- */
+        .particles {
+            position: absolute; width: 100%; height: 100%;
+            top: 0; left: 0; z-index: 1; pointer-events: none;
+        }
+        .dot {
+            position: absolute; width: 4px; height: 4px;
+            background: var(--primary); border-radius: 50%; opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- Modern Stack Layout --- */
+        .main-wrapper {
+            position: relative; z-index: 10;
+            width: 100%; max-width: 1000px;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 20px;
+        }
+
+        .glass-header {
+            background: var(--glass);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid white;
+            padding: 12px 24px;
+            border-radius: 100px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            display: flex; align-items: center; gap: 15px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero-section h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -4px;
+            line-height: 0.85;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- New Countdown Alignment --- */
+        .timer-strip {
+            display: flex;
+            gap: 20px;
+            background: rgba(255,255,255,0.4);
+            padding: 30px;
+            border-radius: 40px;
+            border: 1px solid white;
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .time-node {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .time-node h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 52px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .time-node label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        /* --- Integrated Notification Bar --- */
+        .action-box {
+            width: 100%;
+            max-width: 550px;
+            position: relative;
+        }
+
+        .notify-input {
+            width: 100%;
+            background: white;
+            border: 1px solid var(--border);
+            padding: 25px 35px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-family: inherit;
+            font-weight: 600;
+            outline: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            transition: 0.4s;
+        }
+
+        .notify-input:focus {
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.15);
+            transform: scale(1.02);
+        }
+
+        .btn-launch {
+            position: absolute;
+            right: 10px; top: 10px; bottom: 10px;
+            background: var(--primary);
+            color: white; border: none;
+            padding: 0 30px; border-radius: 22px;
+            font-weight: 800; cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-launch:hover {
+            background: var(--text-main);
+            transform: translateX(-3px);
+        }
+
+        /* --- Footer Info --- */
+        .deployment-id {
+            margin-top: 40px;
+            font-family: 'JetBrains Mono';
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex; gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .timer-strip { flex-wrap: wrap; justify-content: center; }
+            .btn-launch { position: static; width: 100%; margin-top: 15px; height: 60px; }
+            .notify-input { padding: 20px; border-radius: 20px; }
+            .hero-section h1 { letter-spacing: -2px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particles" id="particleContainer"></div>
+
+    <main class="main-wrapper">
+        <header class="glass-header" data-aos="fade-down">
+            <i class="fas fa-satellite-dish" style="color: var(--primary)"></i>
+            <span style="font-weight: 800; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Node Active: SF-01</span>
+        </header>
+
+        <section class="hero-section" data-aos="zoom-out" data-aos-delay="200">
+            <h1>REDEFINING<br>THE EDGE.</h1>
+            <p style="color: var(--text-muted); font-size: 20px; margin-top: 20px; max-width: 600px;">
+                The next evolution of DigitalBoost is currently synthesizing. 
+                Experience a brighter, faster digital ecosystem.
+            </p>
+        </section>
+
+        <div class="timer-strip" data-aos="fade-up" data-aos-delay="400">
+            <div class="time-node">
+                <h2 id="days">14</h2>
+                <label>Days</label>
+            </div>
+            <div style="font-size: 40px; opacity: 0.2; font-weight: 200;">/</div>
+            <div class="time-node">
+                <h2 id="hours">00</h2>
+                <label>Hours</label>
+            </div>
+            <div style="font-size: 40px; opacity: 0.2; font-weight: 200;">/</div>
+            <div class="time-node">
+                <h2 id="mins">00</h2>
+                <label>Minutes</label>
+            </div>
+            <div style="font-size: 40px; opacity: 0.2; font-weight: 200;">/</div>
+            <div class="time-node">
+                <h2 id="secs">00</h2>
+                <label>Seconds</label>
+            </div>
+        </div>
+
+        <div class="action-box" data-aos="fade-up" data-aos-delay="600">
+            <form id="notifyForm">
+                <input type="email" class="notify-input" placeholder="Join the alpha node..." required>
+                <button type="submit" class="btn-launch">GET ACCESS</button>
+            </form>
+        </div>
+
+        <footer class="deployment-id" data-aos="fade-in" data-aos-delay="800">
+            <span>VERSION: 2.0.4-BRIGHT</span>
+            <span>STATUS: SYNCING_RESOURCES</span>
+            <span>EST: MARCH_2026</span>
+        </footer>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Generate Particles
+        const container = document.getElementById('particleContainer');
+        for(let i=0; i<30; i++){
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            dot.style.left = Math.random() * 100 + 'vw';
+            dot.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            dot.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(dot);
+        }
+
+        // Timer Logic
+        const targetDate = new Date().getTime() + (14 * 24 * 60 * 60 * 1000);
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2,'0');
+            document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2,'0');
+            document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2,'0');
+        }, 1000);
+    </script>
+</body>
+</html>
