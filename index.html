@@ -308,6 +308,20 @@
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
+        
+        // Mobile Menu Logic
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.toggle('active');
+            
+            // Switch icon between bars and X
+            if(menu.classList.contains('active')) {
+                icon.classList.replace('fa-bars-staggered', 'fa-xmark');
+            } else {
+                icon.classList.replace('fa-xmark', 'fa-bars-staggered');
+            }
+        }
 
         // Click Animation
         document.addEventListener('mousedown', () => cursor.style.transform = 'scale(2.5)');
