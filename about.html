@@ -10,6 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
+        /* --- 1. Variables & Global Reset --- */
         :root {
             --primary: #4f46e5;
             --primary-light: #818cf8;
@@ -33,88 +34,8 @@
         }
 
         .container { width: 90%; max-width: 1200px; margin: auto; }
-
-        /* --- Header / Navigation Spacer --- */
         .nav-spacer { height: 80px; }
-
-        /* --- Advanced Brighter Hero --- */
-        .hero-section {
-            padding: 100px 0;
-            background: radial-gradient(circle at top right, #e0e7ff, transparent 40%),
-                        radial-gradient(circle at bottom left, #f0f9ff, transparent 40%);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.5rem, 5vw, 4.2rem);
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 1;
-            margin-bottom: 25px;
-            color: var(--text-main);
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            max-width: 550px;
-        }
-
-        /* --- Brighter Stats Alignment --- */
-        .stats-row {
-            display: flex;
-            gap: 30px;
-        }
-
-        .stat-item {
-            background: var(--card);
-            padding: 20px 35px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-        }
-
-        .stat-item h2 { font-size: 32px; color: var(--primary); font-weight: 800; }
-        .stat-item span { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-
-        /* --- Visual Glass Card --- */
-        .hero-image-wrap {
-            position: relative;
-            z-index: 1;
-        }
-
-        .main-hero-img {
-            width: 100%;
-            height: 480px;
-            object-fit: cover;
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-        }
-
-        .glass-overlay-card {
-            position: absolute;
-            bottom: -30px;
-            left: -30px;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            padding: 30px;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.5);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            max-width: 280px;
-        }
-
-        /* --- Core Values (3 Column Alignment) --- */
-        .values-section { padding: 120px 0; background: white; }
-
+        
         .section-tag {
             color: var(--primary);
             font-family: 'JetBrains Mono';
@@ -125,10 +46,84 @@
             margin-bottom: 15px;
         }
 
+        /* --- 2. Hero Section --- */
+        .hero-section {
+            padding: 80px 0;
+            background: radial-gradient(circle at top right, #e0e7ff, transparent 40%),
+                        radial-gradient(circle at bottom left, #f0f9ff, transparent 40%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 550px;
+        }
+
+        /* --- 3. Stats Components --- */
+        .stats-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: var(--card);
+            padding: 20px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            flex: 1;
+        }
+
+        .stat-item h2 { font-size: 32px; color: var(--primary); font-weight: 800; }
+        .stat-item span { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 4. Hero Visuals & Glass Card --- */
+        .hero-image-wrap { position: relative; z-index: 1; }
+
+        .main-hero-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .glass-overlay-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- 5. Core Values --- */
+        .values-section { padding: 100px 0; background: white; }
+
         .values-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: 1fr;
+            gap: 25px;
             margin-top: 50px;
         }
 
@@ -137,40 +132,41 @@
             border-radius: 30px;
             background: var(--bg);
             border: 1px solid var(--border);
-            transition: 0.3s;
+            transition: all 0.4s ease;
         }
 
-        .value-card:hover { transform: translateY(-10px); background: white; border-color: var(--primary); }
+        .value-card:hover { 
+            transform: translateY(-10px); 
+            background: white; 
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1);
+        }
+
         .value-card i { font-size: 30px; color: var(--primary); margin-bottom: 20px; }
 
-        /* --- Evolution Timeline --- */
-        .timeline-section { padding: 120px 0; background: var(--bg); }
+        /* --- 6. Evolution Timeline --- */
+        .timeline-section { padding: 100px 0; background: var(--bg); }
 
         .timeline-wrapper {
             position: relative;
             max-width: 800px;
             margin: 60px auto 0;
+            padding-left: 40px;
         }
 
         .timeline-wrapper::before {
             content: '';
             position: absolute;
-            left: 50%;
+            left: 15px;
             width: 2px;
             height: 100%;
             background: var(--border);
-            transform: translateX(-50%);
         }
 
         .timeline-event {
-            width: 50%;
-            padding: 20px 40px;
             position: relative;
             margin-bottom: 40px;
         }
-
-        .timeline-event:nth-child(odd) { text-align: right; left: 0; }
-        .timeline-event:nth-child(even) { text-align: left; left: 50%; }
 
         .event-card {
             background: white;
@@ -187,20 +183,59 @@
             border: 4px solid white;
             border-radius: 50%;
             position: absolute;
-            top: 40px;
+            left: -32px;
+            top: 30px;
             z-index: 2;
         }
 
-        .timeline-event:nth-child(odd) .event-dot { right: -8px; }
-        .timeline-event:nth-child(even) .event-dot { left: -8px; }
+        /* --- 7. Responsive Desktop Overrides --- */
+        @media (min-width: 992px) {
+            .hero-grid { grid-template-columns: 1.2fr 0.8fr; gap: 80px; }
+            .hero-section { padding: 120px 0; }
+            
+            .glass-overlay-card { 
+                position: absolute; 
+                bottom: -30px; 
+                left: -40px; 
+                max-width: 280px;
+                margin-top: 0;
+            }
 
-        @media (max-width: 992px) {
-            .hero-grid { grid-template-columns: 1fr; }
-            .values-grid { grid-template-columns: 1fr; }
-            .timeline-wrapper::before { left: 20px; }
-            .timeline-event { width: 100%; left: 0 !important; text-align: left !important; padding-left: 50px; }
-            .event-dot { left: 12px !important; }
-            .glass-overlay-card { position: static; margin-top: 20px; }
+            .values-grid { grid-template-columns: repeat(3, 1fr); }
+
+            .timeline-wrapper { padding-left: 0; }
+            .timeline-wrapper::before { left: 50%; transform: translateX(-50%); }
+            .timeline-event { width: 50%; padding: 20px 40px; }
+            .timeline-event:nth-child(odd) { text-align: right; left: 0; }
+            .timeline-event:nth-child(even) { text-align: left; left: 50%; }
+            .timeline-event:nth-child(odd) .event-dot { right: -8px; left: auto; }
+            .timeline-event:nth-child(even) .event-dot { left: -8px; }
+        }
+
+        /* --- 8. Footer --- */
+        .main-footer {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            background: white;
+        }
+
+        .btn-command {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 800;
+            border: 2px solid var(--text-main);
+            padding: 12px 30px;
+            border-radius: 100px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-command:hover {
+            background: var(--text-main);
+            color: white;
         }
     </style>
 </head>
@@ -274,7 +309,7 @@
                 </div>
 
                 <div class="timeline-wrapper">
-                    <div class="timeline-event" data-aos="fade-right">
+                    <div class="timeline-event" data-aos="fade-up">
                         <div class="event-dot"></div>
                         <div class="event-card">
                             <span style="font-weight: 800; color: var(--primary);">2020</span>
@@ -282,7 +317,7 @@
                             <p style="font-size: 14px; color: var(--text-muted);">DigitalBoost founded with a team of 4 engineers in a garage studio.</p>
                         </div>
                     </div>
-                    <div class="timeline-event" data-aos="fade-left">
+                    <div class="timeline-event" data-aos="fade-up">
                         <div class="event-dot"></div>
                         <div class="event-card">
                             <span style="font-weight: 800; color: var(--primary);">2022</span>
@@ -290,7 +325,7 @@
                             <p style="font-size: 14px; color: var(--text-muted);">Reached 500+ active enterprise nodes and expanded to Tokyo.</p>
                         </div>
                     </div>
-                    <div class="timeline-event" data-aos="fade-right">
+                    <div class="timeline-event" data-aos="fade-up">
                         <div class="event-dot"></div>
                         <div class="event-card">
                             <span style="font-weight: 800; color: var(--primary);">2026</span>
@@ -303,9 +338,9 @@
         </section>
     </main>
 
-    <footer style="padding: 80px 0; border-top: 1px solid var(--border); text-align: center; background: white;">
-        <a href="index.html" style="color: var(--text-main); text-decoration: none; font-weight: 800; border: 2px solid var(--text-main); padding: 12px 30px; border-radius: 100px; transition: 0.3s;">
-            <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> BACK TO COMMAND
+    <footer class="main-footer">
+        <a href="index.html" class="btn-command">
+            <i class="fas fa-arrow-left"></i> BACK TO COMMAND
         </a>
     </footer>
 
@@ -313,23 +348,36 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        // Smooth Counter Animation
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const speed = 200;
-            const updateCount = () => {
-                const count = +counter.innerText;
-                const inc = target / speed;
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(updateCount, 10);
-                } else {
-                    counter.innerText = target + (target === 840 ? '+' : '%');
-                }
-            };
-            updateCount();
-        });
+        // Logic for Smooth Counters
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const speed = 200; 
+                const updateCount = () => {
+                    const count = +counter.innerText.replace(/[^0-9]/g, '');
+                    const inc = target / speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target + (target === 840 ? '+' : '%');
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Trigger counters when section is in view
+        const statsSection = document.querySelector('.stats-row');
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                animateCounters();
+                observer.unobserve(statsSection);
+            }
+        }, { threshold: 0.5 });
+
+        observer.observe(statsSection);
     </script>
 </body>
 </html>

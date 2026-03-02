@@ -1,5 +1,4 @@
-
-<!DOCTYPE html
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
@@ -12,36 +11,28 @@
 
     <style>
         :root {
-            --primary: #4f46e5; /* Indigo 600 */
+            --primary: #4f46e5;
             --primary-soft: rgba(79, 70, 229, 0.1);
-            --secondary: #0ea5e9; /* Sky 500 */
-            --bg-main: #f8fafc; /* Slate 50 */
+            --bg-main: #f8fafc;
             --bg-card: #ffffff;
-            --border: #e2e8f0; /* Slate 200 */
-            --text-main: #0f172a; /* Slate 900 */
-            --text-mute: #64748b; /* Slate 500 */
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-mute: #64748b;
             --mono-font: 'Space Mono', monospace;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- Global Reset & Light Theme Base --- */
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            cursor: none; 
-        }
-
+        /* --- 1. GLOBAL RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
             line-height: 1.6;
-            /* Subtle Light Grid */
-            background-image: 
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            overflow-x: hidden;
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
             background-size: 40px 40px;
         }
 
@@ -51,33 +42,38 @@
             padding: 0 24px;
         }
 
-        /* --- Refined Light Cursor --- */
+        /* Custom Cursor Logic */
         #cursor {
             width: 10px; height: 10px;
             background: var(--primary);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 10000;
-            box-shadow: 0 0 15px var(--primary-soft);
-            transition: transform 0.1s ease-out;
+            z-index: 9999;
+            transition: transform 0.1s ease;
         }
 
-        /* --- Navigation Alignment --- */
+        /* Reset cursor for mobile/touch devices */
+        @media (pointer: coarse) {
+            #cursor { display: none; }
+            * { cursor: auto !important; }
+        }
+
+        /* --- 2. NAVIGATION --- */
         header {
             position: fixed;
             top: 0; width: 100%;
             z-index: 1000;
             padding: 24px 0;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: var(--transition);
         }
 
         header.scrolled {
-            padding: 14px 0;
+            padding: 12px 0;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
         }
 
         nav {
@@ -88,6 +84,7 @@
 
         .nav-links {
             display: flex;
+            align-items: center;
             gap: 32px;
             list-style: none;
         }
@@ -102,29 +99,35 @@
 
         .nav-links a:hover { color: var(--primary); }
 
-        /* --- Hero Section --- */
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* --- 3. HERO SECTION --- */
         .hero {
-            padding: 220px 0 120px;
+            padding: clamp(140px, 20vh, 220px) 0 80px;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 9vw, 5.5rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 800;
             letter-spacing: -2px;
-            line-height: 1;
+            line-height: 1.1;
             margin-bottom: 24px;
-            color: var(--text-main);
         }
 
         .hero p {
-            font-size: 20px;
+            font-size: clamp(1rem, 3vw, 1.25rem);
             color: var(--text-mute);
             max-width: 700px;
-            margin: 0 auto 50px;
+            margin: 0 auto 48px;
         }
 
-        /* --- Light Mode Cyber Card --- */
+        /* --- 4. COMPONENTS --- */
         .data-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -134,51 +137,48 @@
             margin: 0 auto 60px;
             box-shadow: var(--shadow);
             display: grid;
-            grid-template-columns: 1fr 1px 1fr;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             gap: 30px;
         }
 
         .stat-val {
             font-family: var(--mono-font);
-            font-size: 42px;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             font-weight: 800;
             color: var(--primary);
             display: block;
         }
 
         .stat-label {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            letter-spacing: 1.5px;
             color: var(--text-mute);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* --- Buttons --- */
         .btn-action {
             background: var(--primary);
-            color: white;
+            color: #fff;
             padding: 20px 48px;
             border-radius: 14px;
             font-weight: 800;
             text-decoration: none;
             display: inline-block;
-            transition: 0.3s;
-            border: none;
+            transition: var(--transition);
             box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.2);
         }
 
         .btn-action:hover {
             transform: translateY(-4px);
-            background: #4338ca;
             box-shadow: 0 25px 30px -5px rgba(79, 70, 229, 0.3);
         }
 
-        /* --- Stats Grid Alignment --- */
+        /* --- 5. STATS GRID --- */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-bottom: 120px;
         }
@@ -188,14 +188,13 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 24px;
-            transition: 0.3s ease;
             text-align: center;
+            transition: var(--transition);
         }
 
         .stat-item:hover {
             transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: var(--shadow);
         }
 
         .stat-item i {
@@ -205,20 +204,31 @@
             line-height: 60px;
             border-radius: 16px;
             font-size: 24px;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
-        /* --- RTL Alignment System --- */
-        [dir="rtl"] { text-align: right; }
-        [dir="rtl"] nav, [dir="rtl"] .nav-right { flex-direction: row-reverse; }
-        [dir="rtl"] .data-card { direction: ltr; }
-
+        /* --- 6. RESPONSIVE & RTL --- */
         @media (max-width: 768px) {
-            .stats-grid { grid-template-columns: 1fr; }
+            .nav-links {
+                position: fixed;
+                top: 0; right: -100%;
+                width: 80%; height: 100vh;
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            }
+
+            .nav-links.active { right: 0; }
+            .mobile-toggle { display: block; }
             .data-card { grid-template-columns: 1fr; }
-            .data-card div:nth-child(2) { display: none; }
-            .nav-links { display: none; }
+            .data-card div:nth-child(2) { display: none; } /* Hide divider on mobile */
         }
+
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .nav-links { right: auto; left: -100%; }
+        [dir="rtl"] .nav-links.active { left: 0; }
     </style>
 </head>
 <body>
@@ -228,20 +238,24 @@
     <header id="navbar">
         <div class="container">
             <nav>
-                <a href="#" class="logo" style="font-weight: 800; font-size: 26px; text-decoration: none; color: var(--text-main);">
-                    <span style="color: var(--primary);">Digital Boost</span>
-                </a>
+                <a href="#" class="logo" style="font-weight: 800; font-size: 24px; text-decoration: none; color: var(--text-main);">
+                    <span style="color: var(--primary);">Digital</span>Boost </a>
                 
-                <ul class="nav-links">
+                <ul class="nav-links" id="menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="pricing.html">Pricing</a></li>
                     <li><a href="contact.html">Support</a></li>
+                    <li>
+                        <button onclick="toggleRTL()" style="background: var(--primary-soft); border: none; color: var(--primary); padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                            REGION: <span id="lang-label">LTR</span>
+                        </button>
+                    </li>
                 </ul>
 
-                <button onclick="toggleRTL()" style="background: var(--primary-soft); border: 1px solid transparent; color: var(--primary); padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;">
-                    REGION: <span id="lang-label">LTR</span>
-                </button>
+                <div class="mobile-toggle" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </div>
             </nav>
         </div>
     </header>
@@ -249,39 +263,37 @@
     <main class="container">
         <section class="hero">
             <h1 data-aos="fade-down">The Intelligence <br> Edge for SEO.</h1>
-            <p data-aos="fade-up" data-aos-delay="100">
-                Unlock real-time keyword tracking and competitive data at scale. Built for enterprise teams who demand 100% accuracy.
-            </p>
+            <p data-aos="fade-up">Unlock real-time keyword tracking and competitive data at scale. Built for teams who demand 100% accuracy.</p>
 
-            <div class="data-card" data-aos="zoom-in" data-aos-delay="300">
+            <div class="data-card" data-aos="zoom-in">
                 <div>
                     <span class="stat-label">Network Nodes</span>
                     <span class="stat-val">1,284</span>
                 </div>
-                <div style="background: var(--border); height: 70px;"></div>
+                <div style="background: var(--border); width: 1px; height: 60px;"></div>
                 <div>
                     <span class="stat-label">Data Latency</span>
                     <span class="stat-val">18ms</span>
                 </div>
             </div>
 
-            <a href="#" class="btn-action" data-aos="fade-up" data-aos-delay="400">GET STARTED FREE</a>
+            <a href="#" class="btn-action" data-aos="fade-up">GET STARTED FREE</a>
         </section>
 
         <section class="stats-grid">
             <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
                 <i class="fa-solid fa-bolt"></i>
-                <h3 style="font-size: 48px; margin-bottom: 10px;">10M+</h3>
+                <h3 style="font-size: 42px; margin-bottom: 8px;">10M+</h3>
                 <p style="color: var(--text-mute); font-weight: 600;">Daily Scans</p>
             </div>
             <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
                 <i class="fa-solid fa-earth-americas"></i>
-                <h3 style="font-size: 48px; margin-bottom: 10px;">140+</h3>
+                <h3 style="font-size: 42px; margin-bottom: 8px;">140+</h3>
                 <p style="color: var(--text-mute); font-weight: 600;">Global Regions</p>
             </div>
             <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
                 <i class="fa-solid fa-check-double"></i>
-                <h3 style="font-size: 48px; margin-bottom: 10px;">99.9%</h3>
+                <h3 style="font-size: 42px; margin-bottom: 8px;">99.9%</h3>
                 <p style="color: var(--text-mute); font-weight: 600;">Accuracy SLA</p>
             </div>
         </section>
@@ -289,10 +301,10 @@
 
     <footer style="background: #fff; border-top: 1px solid var(--border); padding: 80px 0; text-align: center;">
         <div class="container">
-            <p style="color: var(--text-mute); font-family: var(--mono-font); font-size: 14px;">
+            <p style="color: var(--text-mute); font-family: var(--mono-font); font-size: 13px;">
                 SYSTEM STATUS: <span style="color: #22c55e;">ONLINE</span> // v4.2.0
             </p>
-            <div style="margin-top: 20px; font-size: 14px; color: var(--text-mute);">
+            <div style="margin-top: 16px; font-size: 14px; color: var(--text-mute);">
                 &copy; 2026 DigitalBoost Intelligence Corp.
             </div>
         </div>
@@ -302,44 +314,34 @@
     <script>
         AOS.init({ duration: 800, once: true });
 
-        // Cursor Follower
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
+
+        // Custom Cursor Follower
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-        
-        // Mobile Menu Logic
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            const icon = document.getElementById('menuIcon');
-            menu.classList.toggle('active');
-            
-            // Switch icon between bars and X
-            if(menu.classList.contains('active')) {
-                icon.classList.replace('fa-bars-staggered', 'fa-xmark');
-            } else {
-                icon.classList.replace('fa-xmark', 'fa-bars-staggered');
-            }
-        }
 
-        // Click Animation
+        // Click Effect
         document.addEventListener('mousedown', () => cursor.style.transform = 'scale(2.5)');
         document.addEventListener('mouseup', () => cursor.style.transform = 'scale(1)');
 
-        // Scroll Class for Header
+        // Header Scroll Performance
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 40) nav.classList.add('scrolled');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
-        // RTL Functionality
+        // RTL Switcher
         function toggleRTL() {
             const html = document.documentElement;
             const label = document.getElementById('lang-label');
             const isRTL = html.getAttribute('dir') === 'rtl';
-            
             html.setAttribute('dir', isRTL ? 'ltr' : 'rtl');
             label.innerText = isRTL ? 'LTR' : 'RTL';
         }

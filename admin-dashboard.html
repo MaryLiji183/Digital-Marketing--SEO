@@ -10,10 +10,12 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
+        /* --- 1. Variables & Global Styles --- */
         :root {
             --primary: #6366f1;
             --secondary: #f43f5e;
             --accent: #0ea5e9;
+            --success: #10b981;
             --bg: #f8fafc;
             --card-bg: rgba(255, 255, 255, 0.8);
             --border: rgba(99, 102, 241, 0.12);
@@ -28,14 +30,13 @@
             background-color: var(--bg);
             color: var(--text-main);
             overflow-x: hidden;
-            /* Brighter Mesh Gradient */
             background-image: 
                 radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
                 radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.05) 0px, transparent 50%),
                 radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
         }
 
-        /* --- Refined Top Nav Alignment --- */
+        /* --- 2. Navigation --- */
         .top-nav {
             position: fixed; top: 0; left: 0; right: 0;
             background: rgba(255, 255, 255, 0.7);
@@ -54,7 +55,13 @@
         .nav-items a:hover { color: var(--primary); }
         .nav-items a.active { color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 5px; }
 
-        /* --- Layout Control --- */
+        .user-pill {
+            background: white; border: 1px solid var(--border);
+            padding: 6px 15px; border-radius: 100px;
+            font-weight: 700; font-size: 13px;
+        }
+
+        /* --- 3. Dashboard Layout --- */
         .dashboard-container {
             max-width: 1400px;
             margin: 100px auto 50px;
@@ -67,13 +74,13 @@
         }
         .dash-header h1 { font-size: 32px; font-weight: 800; letter-spacing: -1.5px; }
 
-        /* --- Bento Grid Alignment --- */
         .grid-layout {
             display: grid;
             grid-template-columns: 320px 1fr 320px;
             gap: 24px;
         }
 
+        /* --- 4. Components --- */
         .card {
             background: var(--card-bg);
             border: 1px solid white;
@@ -86,7 +93,6 @@
 
         h3 { font-size: 16px; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
 
-        /* --- Data Components --- */
         .mini-metric {
             background: white; border: 1px solid var(--border);
             padding: 15px; border-radius: 20px; margin-bottom: 12px;
@@ -94,7 +100,11 @@
         .mini-metric label { font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; }
         .mini-metric .val { font-size: 20px; font-weight: 800; color: var(--primary); }
 
-        /* --- Live Pulse Chart --- */
+        /* Progress Bars */
+        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 8px 0 20px; }
+        .fill { height: 100%; background: var(--primary); border-radius: 10px; }
+
+        /* Live Pulse Chart */
         .chart-container {
             width: 100%; height: 260px;
             background: white; border-radius: 20px;
@@ -109,24 +119,19 @@
 
         @keyframes grow { from { height: 20%; } to { height: 80%; } }
 
-        /* --- Progress Bars --- */
-        .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 8px 0 20px; }
-        .fill { height: 100%; background: var(--primary); border-radius: 10px; }
-
-        /* --- Activity Feed --- */
-        .feed-item {
-            display: flex; gap: 15px; padding: 12px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        /* Activity Feed */
+        .feed-item { display: flex; gap: 15px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
         .icon-circle {
             width: 36px; height: 36px; border-radius: 10px;
             background: rgba(99, 102, 241, 0.1); color: var(--primary);
             display: flex; align-items: center; justify-content: center; font-size: 14px;
         }
 
+        /* --- 5. Responsive Media Queries --- */
         @media (max-width: 1200px) {
             .grid-layout { grid-template-columns: 1fr; }
             .dash-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .nav-items { display: none; } /* Simplified for desktop priority */
         }
     </style>
 </head>
@@ -136,21 +141,24 @@
         <div class="logo" style="font-weight: 800; font-size: 22px; color: var(--primary);">
             <i class="fas fa-bolt"></i> Digital<span style="color: var(--text-main);">Boost</span>
         </div>
+        
         <ul class="nav-items">
-            <li><a href="home.htl" class="active">HOME</a></li>
-            <li><a href="portfolio.html">photos</a></li>
-            <li><a href="about.html">System Nodes</a></li>
-            <li><a href="contact.html">Contact Support</a></li>
+            <li><a href="index.html" class="active">HOME</a></li>
+            <li><a href="portfolio.html">PHOTOS</a></li>
+            <li><a href="about.html">SYSTEM NODES</a></li>
+            <li><a href="contact.html">SUPPORT</a></li>
         </ul>
-        <div style="display: flex; align-items: center; gap: 15px;">
+
+        <div style="display: flex; align-items: center; gap: 20px;">
             <i class="far fa-bell" style="color: var(--text-dim); cursor: pointer;"></i>
-            <div class="user-pill" style="background: white; border: 1px solid var(--border); padding: 6px 15px; border-radius: 100px; font-weight: 700; font-size: 13px;">
-                <span style="color: #10b981;">●</span> Admin_Root
+            <div class="user-pill">
+                <span style="color: var(--success);">●</span> Admin_Root
             </div>
         </div>
     </nav>
 
     <main class="dashboard-container">
+        
         <header class="dash-header" data-aos="fade-up">
             <div>
                 <h1>Command Center</h1>
@@ -163,7 +171,7 @@
 
         <div class="grid-layout">
             
-            <div class="column" data-aos="fade-right">
+            <section class="column" data-aos="fade-right">
                 <div class="card">
                     <h3><i class="fas fa-microchip" style="color: var(--primary);"></i> Performance</h3>
                     
@@ -174,23 +182,23 @@
                     <div class="progress-bar"><div class="fill" style="width: 65%; background: var(--accent);"></div></div>
                     
                     <label style="font-size: 12px; font-weight: 700;">Node Connectivity</label>
-                    <div class="progress-bar"><div class="fill" style="width: 98%; background: #10b981;"></div></div>
+                    <div class="progress-bar"><div class="fill" style="width: 98%; background: var(--success);"></div></div>
                 </div>
 
                 <div class="card" style="margin-top: 24px;">
                     <h3><i class="fas fa-satellite" style="color: var(--secondary);"></i> Network Pulse</h3>
                     <div class="mini-metric">
                         <label>Active Crawlers</label>
-                        <div class="val">842 <span style="font-size: 12px; color: #10b981;">+12%</span></div>
+                        <div class="val">842 <span style="font-size: 12px; color: var(--success);">+12%</span></div>
                     </div>
                     <div class="mini-metric">
                         <label>Request Latency</label>
                         <div class="val">14ms <span style="font-size: 12px; color: var(--secondary);">Optimal</span></div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="column" data-aos="fade-up" data-aos-delay="100">
+            <section class="column" data-aos="fade-up" data-aos-delay="100">
                 <div class="card" style="height: 100%;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                         <h3><i class="fas fa-chart-line" style="color: var(--primary);"></i> Growth Synthesis</h3>
@@ -216,14 +224,14 @@
                             <p style="font-size: 12px; color: var(--text-dim); font-weight: 700;">Organic Inflow</p>
                         </div>
                         <div style="text-align: center;">
-                            <h2 style="font-size: 28px; color: #10b981;">+22%</h2>
+                            <h2 style="font-size: 28px; color: var(--success);">+22%</h2>
                             <p style="font-size: 12px; color: var(--text-dim); font-weight: 700;">Conversion Rate</p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="column" data-aos="fade-left" data-aos-delay="200">
+            <section class="column" data-aos="fade-left" data-aos-delay="200">
                 <div class="card" style="height: 100%;">
                     <h3><i class="fas fa-stream" style="color: var(--accent);"></i> Live Streams</h3>
                     
@@ -244,7 +252,7 @@
                     </div>
 
                     <div class="feed-item">
-                        <div class="icon-circle" style="color: #10b981; background: rgba(16, 185, 129, 0.1);"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <div class="icon-circle" style="color: var(--success); background: rgba(16, 185, 129, 0.1);"><i class="fas fa-cloud-upload-alt"></i></div>
                         <div>
                             <p style="font-size: 13px; font-weight: 800;">Backup Completed</p>
                             <p style="font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono';">Archive_V9 // SQL_DB</p>
@@ -255,14 +263,18 @@
                         Export Session Logs
                     </button>
                 </div>
-            </div>
+            </section>
 
         </div>
     </main>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
+        AOS.init({ 
+            duration: 1000, 
+            once: true,
+            offset: 50 
+        });
     </script>
 </body>
 </html>

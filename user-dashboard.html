@@ -10,6 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
+        /* --- 1. Design System --- */
         :root {
             --primary: #6366f1;
             --secondary: #ec4899;
@@ -19,7 +20,7 @@
             --border: rgba(99, 102, 241, 0.15);
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --neon-glow: 0 0 20px rgba(99, 102, 241, 0.2);
+            --nav-width: 100px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,16 +32,15 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
-            /* Vibrant Mesh Gradient Background */
             background-image: 
                 radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
                 radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.1) 0px, transparent 50%),
                 radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
         }
 
-        /* --- Floating Navigation Hub --- */
+        /* --- 2. Sidebar Navigation --- */
         .nav-hub {
-            width: 100px;
+            width: var(--nav-width);
             margin: 20px;
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(20px);
@@ -51,7 +51,8 @@
             align-items: center;
             padding: 30px 0;
             box-shadow: 0 20px 40px rgba(0,0,0,0.03);
-            z-index: 100;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .nav-icon {
@@ -61,7 +62,7 @@
             text-decoration: none;
             border-radius: 18px;
             margin-bottom: 25px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             font-size: 20px;
         }
 
@@ -72,7 +73,7 @@
             box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
 
-        /* --- Main Dashboard Area --- */
+        /* --- 3. Main Content Area --- */
         .dashboard-container {
             flex: 1;
             padding: 40px 40px 40px 20px;
@@ -89,7 +90,7 @@
 
         .top-bar h1 { font-family: 'Space Grotesk'; font-size: 32px; letter-spacing: -1.5px; }
 
-        /* --- Rearranged Bento Grid --- */
+        /* --- 4. Bento Grid System --- */
         .grid-layout {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -104,25 +105,25 @@
             padding: 30px;
             backdrop-filter: blur(15px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-            transition: 0.5s;
+            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
         }
 
         .glass-widget:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-8px);
             background: white;
             box-shadow: 0 30px 60px rgba(99, 102, 241, 0.1);
             border-color: var(--primary);
         }
 
-        /* Span Logic */
+        /* Grid Spans */
         .col-4 { grid-column: span 4; }
         .col-2 { grid-column: span 2; }
         .row-2 { grid-row: span 2; }
         .row-3 { grid-row: span 3; }
 
-        /* --- Visual Enhancements --- */
+        /* --- 5. UI Elements --- */
         .label { font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px; }
         .value { font-size: 48px; font-weight: 800; color: var(--text-main); line-height: 1; }
         
@@ -140,45 +141,60 @@
             animation: ringPulse 2s infinite;
         }
 
-        @keyframes ringPulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(3); opacity: 0; }
-        }
-
-        /* --- Graph Visual --- */
-        .mini-chart {
-            display: flex; align-items: flex-end; gap: 10px; margin-top: 30px; height: 150px;
-        }
-        .bar { 
-            flex: 1; border-radius: 10px 10px 4px 4px; 
-            background: linear-gradient(to top, var(--primary), var(--secondary));
-            transition: 1s ease;
-        }
+        .mini-chart { display: flex; align-items: flex-end; gap: 10px; margin-top: 30px; height: 150px; }
+        .bar { flex: 1; border-radius: 10px 10px 4px 4px; background: linear-gradient(to top, var(--primary), var(--secondary)); transition: 0.5s ease; }
 
         .status-pill {
             padding: 6px 12px; border-radius: 100px; font-size: 10px; font-weight: 800;
             background: rgba(16, 185, 129, 0.1); color: #10b981;
         }
 
+        /* --- 6. Responsive Logic --- */
+        @media (max-width: 1100px) {
+            .grid-layout { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .nav-hub {
+                width: calc(100% - 40px);
+                height: 80px;
+                flex-direction: row;
+                padding: 0 30px;
+                justify-content: space-between;
+                margin: 20px auto;
+            }
+            .nav-icon { margin-bottom: 0; }
+            .nav-hub div:first-child, .nav-hub div:last-child { display: none; }
+            .dashboard-container { padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; grid-auto-rows: auto; }
+            .col-4, .col-2, .row-2, .row-3 { grid-column: span 1; grid-row: span 1; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 20px; }
+        }
+
+        @keyframes ringPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <nav class="nav-hub">
         <div style="color: var(--primary); font-size: 28px; margin-bottom: 50px;"><i class="fas fa-compass"></i></div>
-        <a href="#" class="nav-icon active"><i class="fas fa-th-large"></i></a>
-        <a href="#" class="nav-icon"><i class="fas fa-wave-square"></i></a>
-        <a href="#" class="nav-icon"><i class="fas fa-layer-group"></i></a>
-        <a href="#" class="nav-icon"><i class="fas fa-bolt"></i></a>
+        <a href="index.html" class="nav-icon active"><i class="fas fa-th-large"></i></a>
+        <a href="about.html" class="nav-icon"><i class="fas fa-wave-square"></i></a>
+        <a href="contact.html" class="nav-icon"><i class="fas fa-layer-group"></i></a>
+        <a href="portfolio.html" class="nav-icon"><i class="fas fa-bolt"></i></a>
         <div style="margin-top: auto;">
-            <a href="#" class="nav-icon"><i class="fas fa-user-circle"></i></a>
+            <a href="contact.html" class="nav-icon"><i class="fas fa-user-circle"></i></a>
         </div>
     </nav>
 
     <main class="dashboard-container">
         <header class="top-bar" data-aos="fade-down">
             <div>
-                <h1>Command <span style="color: var(--primary);">Synthesis.</span></h1>
+                <h1>Digital <span style="color: var(--primary);">Boost.</span></h1>
                 <p style="color: var(--text-muted); font-weight: 600;">System Online • Node: Nexus-Alpha-01</p>
             </div>
             <div style="display: flex; gap: 15px;">
@@ -211,7 +227,7 @@
 
             <div class="glass-widget col-2 row-2" data-aos="fade-left">
                 <span class="label">Network Health</span>
-                <div class="value">Stable</div>
+                <div class="value" style="font-size: 32px;">Stable</div>
                 <div style="margin-top: 30px; display: flex; align-items: center;">
                     <div class="pulse-ring"></div>
                     <span style="font-weight: 800; font-size: 14px;">All Nodes Verified</span>
@@ -223,17 +239,17 @@
 
             <div class="glass-widget col-2" data-aos="fade-up" data-aos-delay="100">
                 <span class="label">Avg Latency</span>
-                <div class="value" id="latencyVal">18ms</div>
+                <div class="value" id="latencyVal" style="font-size: 36px;">18ms</div>
             </div>
 
             <div class="glass-widget col-2 row-2" data-aos="fade-up" data-aos-delay="200">
                 <span class="label">Live Activity</span>
                 <div style="margin-top: 15px;">
-                    <div style="margin-bottom: 15px;">
+                    <div style="margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
                         <span class="status-pill">SUCCESS</span>
                         <p style="font-size: 12px; font-weight: 700; margin-top: 5px;">Data Sync: Global</p>
                     </div>
-                    <div style="margin-bottom: 15px;">
+                    <div>
                         <span class="status-pill" style="background: rgba(99,102,241,0.1); color: var(--primary);">UPLINK</span>
                         <p style="font-size: 12px; font-weight: 700; margin-top: 5px;">Node 05: Online</p>
                     </div>
@@ -259,13 +275,27 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialize Animations
         AOS.init({ duration: 1000, once: true });
 
-        // Dynamic Latency Update
+        // Real-time Latency Simulation
+        const latencyText = document.getElementById('latencyVal');
         setInterval(() => {
             const lat = 15 + Math.floor(Math.random() * 8);
-            document.getElementById('latencyVal').innerText = lat + 'ms';
+            latencyText.innerText = lat + 'ms';
+            
+            // Subtle color shift if latency is high
+            latencyText.style.color = lat > 20 ? 'var(--secondary)' : 'var(--text-main)';
         }, 2000);
+
+        // Animate bars on load
+        document.querySelectorAll('.bar').forEach(bar => {
+            const targetHeight = bar.style.height;
+            bar.style.height = '0%';
+            setTimeout(() => {
+                bar.style.height = targetHeight;
+            }, 500);
+        });
     </script>
 </body>
 </html>
